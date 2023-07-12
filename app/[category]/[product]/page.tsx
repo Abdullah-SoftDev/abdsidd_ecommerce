@@ -1,7 +1,7 @@
 "use client";
 import { Disclosure, Tab } from "@headlessui/react";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
-import ProductSlider from "./components/ProductSlider";
+import RecommendedProductSlider from "./components/RecommendedProductSlider";
 
 const product = {
   name: "Zip Tote Basket",
@@ -233,7 +233,7 @@ export default function Example() {
         </div>
 
       </div>
-      <ProductSlider/>
+      <RecommendedProductSlider/>
     </div>
   );
 }

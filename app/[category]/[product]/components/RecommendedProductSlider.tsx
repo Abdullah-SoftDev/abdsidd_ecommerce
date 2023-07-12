@@ -113,7 +113,7 @@ const products = [
   },
   // More products...
 ]
-const ProductSlider = () => {
+const RecommendedProductSlider = () => {
   return (
     <div className="mx-auto max-w-5xl px-2 lg:px-0 py-14">
       <h2 className="text-center text-3xl">Recommended Products⚡</h2>
@@ -154,4 +154,4 @@ const ProductSlider = () => {
   );
 };
 
-export default ProductSlider;
+export default RecommendedProductSlider;

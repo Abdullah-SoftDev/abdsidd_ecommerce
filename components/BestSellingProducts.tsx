@@ -60,9 +60,7 @@ const BestSellingProducts = () => {
       <div className="mt-4 flow-root">
         <div className="-my-2">
           <div
-            className="box-content py-2 relative h-96 overflow-x-auto xl:overflow-visible"
-            style={{ overflowY: "scroll", scrollbarWidth: "none" }}
-          >
+            className="box-content py-2 relative h-96 overflow-x-scroll scrollbar-thin scrollbar-thumb-gray-900">
             <div className="absolute min-w-screen-xl px-4 flex space-x-4 sm:px-6 lg:px-8 xl:relative xl:px-0 xl:space-x-0 xl:grid xl:grid-cols-4 xl:gap-x-8 grid-cols-2">
               {products.map((category) => (
                 <Link
