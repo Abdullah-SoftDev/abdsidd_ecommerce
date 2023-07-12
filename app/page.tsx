@@ -1,7 +1,10 @@
+import Slider from "@/components/Slider";
+
 export default function Home() {
   return (
-    <p>
-      Let start building my ecommerce store.
-    </p>
+    <>
+      {/* Let start building my ecommerce store. */}
+      <Slider />
+    </>
   )
 }
