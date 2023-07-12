@@ -1,6 +1,7 @@
 "use client";
 import { Disclosure, Tab } from "@headlessui/react";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
+import ProductSlider from "./components/ProductSlider";
 
 const product = {
   name: "Zip Tote Basket",
@@ -230,7 +231,9 @@ export default function Example() {
             </div>
           </form>
         </div>
+
       </div>
+      <ProductSlider/>
     </div>
   );
 }
