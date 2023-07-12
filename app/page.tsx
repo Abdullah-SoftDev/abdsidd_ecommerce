@@ -1,3 +1,4 @@
+import BestSellingProducts from "@/components/BestSellingProducts";
 import CategoryProducts from "@/components/CategoryProducts";
 import Slider from "@/components/Slider";
 
@@ -6,6 +7,7 @@ export default function Home() {
     <>
       <Slider />
       <CategoryProducts/>
+      <BestSellingProducts/>
     </>
   )
 }
