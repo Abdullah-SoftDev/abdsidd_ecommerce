@@ -74,7 +74,7 @@ const BestSellingProducts = () => {
                     <img
                       src={category.imageSrc}
                       alt=""
-                      className="w-full h-full object-cover object-center"
+                      className="w-full h-full object-cover object-center rounded-lg"
                     />
                   </div>
                   <div className="mt-2">
