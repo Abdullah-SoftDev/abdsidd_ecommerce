@@ -1,6 +1,10 @@
+import RecentOrders from "./components/RecentOrders"
+
 const page = () => {
   return (
-    <div>page</div>
+    <>
+      <RecentOrders />
+    </>
   )
 }
 
