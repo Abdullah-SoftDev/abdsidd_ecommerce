@@ -30,7 +30,7 @@ export default function Slider() {
             >
                 <SwiperSlide>
                     <img
-                        className="object-cover w-full h-full bg-red-400"
+                        className="object-cover w-full h-full"
                         src="https://img.freepik.com/free-vector/nice-happy-diwali-sale-banner-with-discount-details_1017-39614.jpg?w=826&t=st=1666347756~exp=1666348356~hmac=86e7cb17ddce424af357e0fcff3ee15870fd2624acff4adf24aaeab033c5476c"
                         alt="image slide 1"
                     />
