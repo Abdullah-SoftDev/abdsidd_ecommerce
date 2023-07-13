@@ -2,6 +2,7 @@
 import { Disclosure, Tab } from "@headlessui/react";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import RecommendedProductSlider from "./components/RecommendedProductSlider";
+import ReactImageZoom from "react-image-zoom";
 
 const product = {
   name: "Zip Tote Basket",
@@ -102,14 +103,12 @@ export default function Example() {
               ))}
             </Tab.List>
           </div>
-
           <Tab.Panels className="w-full aspect-w-1 aspect-h-1">
             {product.images.map((image) => (
               <Tab.Panel key={image.id}>
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="w-full h-full object-center object-cover sm:rounded-lg"
+                <ReactImageZoom
+                  className="w-full h-full object-center object-cover  sm:rounded-lg"
+                  img={image.src}
                 />
               </Tab.Panel>
             ))}
@@ -125,7 +124,6 @@ export default function Example() {
           <h1 className="text-3xl font-bold tracking-tight text-gray-900 pt-3">
             {product.name}
           </h1>
-
           <div className="mt-6">
             <h3 className="text-xl font-medium tracking-tight ">
               Product Description
@@ -151,8 +149,8 @@ export default function Example() {
                         <Disclosure.Button className="group relative w-full py-6 flex justify-between items-center text-left">
                           <span
                             className={classNames(
-                              open ? "text-indigo-600" : "text-gray-900",
-                              "text-sm font-medium"
+                              open ? "text-indigo-600 -z-10" : "text-gray-900",
+                              "text-sm font-medium -z-10"
                             )}
                           >
                             {detail.name}
@@ -231,9 +229,8 @@ export default function Example() {
             </div>
           </form>
         </div>
-
       </div>
-      <RecommendedProductSlider/>
+      <RecommendedProductSlider />
     </div>
   );
 }
