@@ -66,7 +66,7 @@ const BestSellingProducts = () => {
                 <Link
                   key={category.name}
                   href={category.href}
-                  className="relative w-56 h-full rounded-lg py-3 flex flex-col justify-between overflow-hidden hover:opacity-75 xl:w-auto"
+                  className="relative w-56 h-full rounded-lg  flex flex-col justify-between overflow-hidden hover:opacity-75 xl:w-auto"
                 >
                   <div className="relative aspect-w-3 aspect-h-2">
                     <img
