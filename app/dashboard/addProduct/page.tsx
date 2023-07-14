@@ -64,7 +64,7 @@ const page = () => {
       slug,
       desc,
       price,
-      category,
+      category:category.toLowerCase(),
       images,
     };
 
