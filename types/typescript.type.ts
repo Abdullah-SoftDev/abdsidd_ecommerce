@@ -4,6 +4,5 @@ export type Product = {
   desc: string;
   price: number;
   category: string;
+  images: (string | File)[];
 };
-
-  
