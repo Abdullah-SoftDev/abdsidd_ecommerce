@@ -6,6 +6,7 @@ export type Product = {
   slug: string;
   desc: string;
   price: number;
+  quantity: number;
   category: string;
   images: (string | File)[];
   createdAt?: Timestamp;

@@ -21,6 +21,7 @@ const AddToCartButton = ({ productData }: any) => {
                 price: productData.price,
                 category: productData.category,
                 images: productData.images,
+                quantity: productData.quantity,
                 createdAt: serverTimestamp(),
                 uid: user.uid
             });
