@@ -18,7 +18,7 @@ const Cart = ({ open, setOpen }: any) => {
   const handelRemoveFromCart = async (id: string) => {
     await deleteDoc(doc(db, 'cart', id));
   }
-
+ const userCartdata = cartData?.filter((data) => data?.uid === user?.uid);
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-30" onClose={setOpen}>
@@ -50,13 +50,13 @@ const Cart = ({ open, setOpen }: any) => {
                   <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
                     <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                       <div className="flex items-start justify-between">
-                        <Dialog.Title className="text-lg font-medium text-gray-900">
+                        <Dialog.Title className="text-xl font-medium text-gray-900">
                           Shopping cart
                         </Dialog.Title>
                         <div className="ml-3 flex h-7 items-center">
                           <button
                             type="button"
-                            className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                            className="-m-2 p-2 text-gray-400 hover:text-gray-500 outline-none"
                             onClick={() => setOpen(false)}
                           >
                             <span className="sr-only">Close panel</span>
@@ -65,13 +65,18 @@ const Cart = ({ open, setOpen }: any) => {
                         </div>
                       </div>
 
+                      {(userCartdata?.length === 0) && (
+  <p className="text-red-500 italic text-lg py-5">Your cart is empty. Start Shopping🛒</p>
+)}
+                
+
                       <div className="mt-8">
                         <div className="flow-root">
                           <ul
                             role="list"
                             className="-my-6 divide-y divide-gray-200"
                           >
-                            {cartData?.filter((data) => data?.uid === user?.uid)?.map((product) => (
+                            {userCartdata?.map((product) => (
                               <li key={product.id} className="flex py-6">
                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                   <img
@@ -118,7 +123,7 @@ const Cart = ({ open, setOpen }: any) => {
                       </div>
                     </div>
 
-                    <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
+                {(!(userCartdata?.length === 0)) && <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <p>Subtotal</p>
                         <p>$262.00</p>
@@ -147,7 +152,7 @@ const Cart = ({ open, setOpen }: any) => {
                           </button>
                         </p>
                       </div>
-                    </div>
+                    </div>}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

@@ -15,7 +15,7 @@ const Navbar = () => {
     const [open, setOpen] = useState<boolean>(false)  //Handles the cart sidebar
     const [user] = useAuthState(auth);
     const [cartData,loading] = useCollectionData(collection(db,'cart'))
-    let cartLength = cartData?.filter((data)=>data?.uid === user?.uid)?.length
+    let cartLength = cartData?.filter((data)=>data?.uid === user?.uid)?.length || 0
 
     return (
         <Disclosure as="nav" className="bg-white shadow sticky top-0 left-0 right-0 z-20">
