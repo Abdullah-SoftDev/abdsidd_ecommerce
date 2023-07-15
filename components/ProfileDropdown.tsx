@@ -4,7 +4,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { doc, setDoc } from "firebase/firestore";
 import Link from "next/link";
 import React, { Fragment, useEffect } from "react";
-import { useSignInWithGoogle, useSignOut } from "react-firebase-hooks/auth";
+import { useAuthState, useSignInWithGoogle, useSignOut } from "react-firebase-hooks/auth";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -15,6 +15,7 @@ function classNames(...classes: string[]) {
 const ProfileDropdown = () => {
   const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
   const [signOut] = useSignOut(auth);
+  const [userr] = useAuthState(auth);
 
   const handleSignIn = async () => {
     await signInWithGoogle();
@@ -52,7 +53,7 @@ const ProfileDropdown = () => {
         pauseOnHover
         theme="light"
       />
-      {user ? (
+      {userr ? (
         <Menu as="div" className="relative flex-shrink-0">
           <div>
             <Menu.Button className="bg-white rounded-full flex text-sm focus:outline-none">
