@@ -1,6 +1,6 @@
 "use client";
 import { Product } from "@/types/typescript.type";
-import { doc, setDoc, Timestamp } from "firebase/firestore";
+import { collection, doc, serverTimestamp, setDoc, Timestamp } from "firebase/firestore";
 import { db, storage } from "@/firebase/firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { ChangeEvent, useState } from "react";
@@ -10,7 +10,7 @@ const page = () => {
   const [isPublishing, setIsPublishing] = useState<boolean>(false);
   const [uploaded, setIsUploaded] = useState<boolean>(false);
 
-  const [product, setProduct] = useState<Product>({
+  const [product, setProduct] = useState({
     productName: "",
     slug: "",
     desc: "",
@@ -41,7 +41,7 @@ const page = () => {
     const fileList = event.target.files;
     if (fileList) {
       const fileArray = Array.from(fileList);
-      setProduct((prevProduct) => ({
+      setProduct((prevProduct:any) => ({
         ...prevProduct,
         images: fileArray,
       }));
@@ -58,15 +58,18 @@ const page = () => {
       alert("Please fill all required fields.");
       return;
     }
+    const productId = doc(collection(db, "ids")).id;
 
     const newProduct: Product = {
+      productId,
       productName,
       slug,
       desc,
       price,
       category:category.toLowerCase(),
       images,
-    };
+      createdAt: serverTimestamp() as Timestamp,
+        };
 
     await setDoc(doc(db, "products", `${newProduct.slug}`), newProduct);
     setIsPublishing(false);
@@ -102,7 +105,7 @@ const page = () => {
         downloadURLs.push(downloadURL);
       }
   
-      setProduct((prevProduct) => ({
+      setProduct((prevProduct:any) => ({
         ...prevProduct,
         images: downloadURLs,
       }));
@@ -195,7 +198,7 @@ const page = () => {
         </div>
 
         {uploaded ? (
-          <p className="text-red-500">Images gets uploaded.</p>
+          <p className="text-red-500 sm:col-span-6">Images gets uploaded.</p>
         ) : (
           <>
             <div className="sm:col-span-6">

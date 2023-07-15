@@ -4,6 +4,7 @@ import { Product } from "@/types/typescript.type";
 import { doc, getDoc } from "firebase/firestore";
 import ImageGallery from "./components/ImageGallery";
 import Features from "./components/Features";
+import AddToCartButton from "./components/AddToCartButton";
 
 export default async function page({ params }: { params: { slug: string } }) {
   const { slug } = params;
@@ -66,22 +67,15 @@ export default async function page({ params }: { params: { slug: string } }) {
               </form>
             </div>
 
-            <form className="mt-6">
-              <div className="mt-10 space-x-5 flex sm:flex-col1">
-                <button
-                  type="submit"
-                  className="max-w-xs flex-1 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 sm:w-full"
-                >
-                  Add to bag
-                </button>
-                <button
-                  type="submit"
-                  className="max-w-xs flex-1 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 sm:w-full"
-                >
-                  Buy Now
-                </button>
-              </div>
-            </form>
+            <div className="mt-10 space-x-5 flex sm:flex-col1">
+              <AddToCartButton productData={productData}/>
+              <button
+                type="button"
+                className="max-w-xs flex-1 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 sm:w-full"
+              >
+                Buy Now
+              </button>
+            </div>
           </div>
         </div>
       </div>
