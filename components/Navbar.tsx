@@ -6,9 +6,16 @@ import ProfileDropdown from "./ProfileDropdown";
 import Cart from "./Cart";
 import { useState } from "react";
 import { ShoppingBagIcon } from "@heroicons/react/24/outline";
+import { auth, db } from "@/firebase/firebaseConfig";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { collection } from "firebase/firestore";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 
 const Navbar = () => {
     const [open, setOpen] = useState<boolean>(false)  //Handles the cart sidebar
+    const [user] = useAuthState(auth);
+    const [cartData,loading] = useCollectionData(collection(db,'cart'))
+    let cartLength = cartData?.filter((data)=>data?.uid === user?.uid)?.length
 
     return (
         <Disclosure as="nav" className="bg-white shadow sticky top-0 left-0 right-0 z-20">
@@ -53,7 +60,7 @@ const Navbar = () => {
                                 aria-hidden="true"
                             />
                             <span className="absolute animate-pulse top-0 right-1 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-semibold">
-                                0
+                              {cartLength}
                             </span>
                         </div>
                     </div>

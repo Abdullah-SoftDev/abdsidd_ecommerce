@@ -22,7 +22,7 @@ const AddToCartButton = ({ productData }: any) => {
                 category: productData.category,
                 images: productData.images,
                 createdAt: serverTimestamp(),
-                // uid: user.uid
+                uid: user.uid
             });
             }
         } catch (error) {

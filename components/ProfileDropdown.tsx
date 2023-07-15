@@ -1,14 +1,57 @@
+import { FIREBASE_ERRORS } from "@/firebase/error";
+import { auth, db } from "@/firebase/firebaseConfig";
 import { Menu, Transition } from "@headlessui/react";
+import { doc, setDoc } from "firebase/firestore";
 import Link from "next/link";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
+import { useSignInWithGoogle, useSignOut } from "react-firebase-hooks/auth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+function classNames(...classes: string[]) {
+  return classes?.filter(Boolean)?.join(" ");
+}
 
 const ProfileDropdown = () => {
-  const user = false;
-  function classNames(...classes: string[]) {
-    return classes?.filter(Boolean)?.join(" ");
+  const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+  const [signOut] = useSignOut(auth);
+
+  const handleSignIn = async () => {
+    await signInWithGoogle();
+    toast.success("Login Successfully.");
+  };
+
+  // Create user document in Firestore on google authentication
+  const createUserDocumentOnGoogleauth = async () => {
+    const docRef = doc(db, `users/${user?.user.uid}`);
+    await setDoc(docRef, JSON.parse(JSON.stringify(user?.user)));
+  };
+  useEffect(() => {
+    if (user) {
+      createUserDocumentOnGoogleauth();
+    }
+  }, [user]);
+
+  if (error) {
+    {
+      toast.error(FIREBASE_ERRORS[error.message]);
+    }
   }
+
   return (
     <div className="md:ml-4 ml-2 flex items-center">
+      <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       {user ? (
         <Menu as="div" className="relative flex-shrink-0">
           <div>
@@ -73,6 +116,9 @@ const ProfileDropdown = () => {
               <Menu.Item>
                 {({ active }) => (
                   <button
+                    onClick={async () => {
+                      await signOut();
+                    }}
                     className={classNames(
                       active ? "bg-gray-100 w-full text-left" : "",
                       "block px-4 py-2 text-sm text-gray-700 w-full text-left"
@@ -86,12 +132,12 @@ const ProfileDropdown = () => {
           </Transition>
         </Menu>
       ) : (
-        <Link
-          href="/signIn"
+        <button
+          onClick={handleSignIn}
           className="sm:ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-gray-900 hover:bg-gray-700 focus:outline-none"
         >
-          Sign In
-        </Link>
+          {loading ? "Loading..." : "Sign In"}
+        </button>
       )}
     </div>
   );
