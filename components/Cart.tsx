@@ -18,7 +18,17 @@ const Cart = ({ open, setOpen }: any) => {
   const handelRemoveFromCart = async (id: string) => {
     await deleteDoc(doc(db, 'cart', id));
   }
- const userCartdata = cartData?.filter((data) => data?.uid === user?.uid);
+  const userCartdata = cartData?.filter((data) => data?.uid === user?.uid);
+
+  const totalarr: number[] = [];
+  userCartdata?.map((e: any) => {
+    totalarr.push(e?.price)
+  })
+  let sum = 0;
+  for (let i = 0; i < totalarr.length; i++) {
+    sum += totalarr[i]
+  }
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-30" onClose={setOpen}>
@@ -66,9 +76,9 @@ const Cart = ({ open, setOpen }: any) => {
                       </div>
 
                       {(userCartdata?.length === 0) && (
-  <p className="text-red-500 italic text-lg py-5">Your cart is empty. Start Shopping🛒</p>
-)}
-                
+                        <p className="text-red-500 italic text-lg py-5">Your cart is empty. Start Shopping🛒</p>
+                      )}
+
 
                       <div className="mt-8">
                         <div className="flow-root">
@@ -123,10 +133,10 @@ const Cart = ({ open, setOpen }: any) => {
                       </div>
                     </div>
 
-                {(!(userCartdata?.length === 0)) && <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
+                    {(!(userCartdata?.length === 0)) && <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <p>Subtotal</p>
-                        <p>$262.00</p>
+                        <p>₹{sum}</p>
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">
                         Shipping and taxes calculated at checkout.

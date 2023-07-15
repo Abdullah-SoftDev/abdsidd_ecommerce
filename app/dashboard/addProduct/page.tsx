@@ -65,7 +65,7 @@ const page = () => {
       productName,
       slug,
       desc,
-      price,
+      price: Number(price),
       category:category.toLowerCase(),
       images,
       createdAt: serverTimestamp() as Timestamp,
