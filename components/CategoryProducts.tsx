@@ -1,11 +1,13 @@
 import Link from "next/link";
+
 const collections = [
   {
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg",
-    altText:
-      "Tall slender porcelain bottle with natural clay textured body and cork stopper.",
-    heading: "Bottle",
+    "https://cdn.dotpe.in/longtail/item_thumbnails/1293287/dOyXoEjc.webp",
+  altText:
+    "Tall slender porcelain bottle with natural clay textured body and cork stopper.",
+  heading: "Airpods",
+    href: "/airpod", // Add the desired href value
   },
   {
     imageSrc:
@@ -13,36 +15,26 @@ const collections = [
     altText:
       "Tall slender porcelain bottle with natural clay textured body and cork stopper.",
     heading: "Mug",
+    href: "#mug", // Add the desired href value
   },
   {
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg",
+      "https://codeswear.com/_next/image?url=https%3A%2F%2Fcodeswear.nyc3.cdn.digitaloceanspaces.com%2Fconstants%2Flanding%2Fcollections%2Fmugs.webp&w=1920&q=75",
     altText:
       "Tall slender porcelain bottle with natural clay textured body and cork stopper.",
-    heading: "Desk",
+    heading: "Mug",
+    href: "#mug", // Add the desired href value
   },
-  {
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg",
-    altText:
-      "Tall slender porcelain bottle with natural clay textured body and cork stopper.",
-    heading: "Flower Pot",
-  },
-  {
-    imageSrc:
-      "https://codeswear.com/_next/image?url=https%3A%2F%2Fcodeswear.nyc3.cdn.digitaloceanspaces.com%2Fconstants%2Flanding%2Fcollections%2Fhoodie.webp&w=1920&q=75",
-    altText:
-      "Tall slender porcelain bottle with natural clay textured body and cork stopper.",
-    heading: "Hoodies",
-  },
+  // Add more collection items with href values
 ];
+
 const CategoryProducts = () => {
   return (
     <div className="mx-auto max-w-5xl px-2 py-14">
       <h2 className="text-center text-3xl pb-4">Top Collections🔥</h2>
       <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
         {collections.map((collection, index) => (
-          <Link href="/" key={index}>
+          <Link key={index} href={collection.href}>
             <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
               <div className="relative group">
                 <img

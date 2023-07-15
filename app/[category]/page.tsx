@@ -25,13 +25,11 @@ const page = async ({ params }: {  params: { category: string }}) => {
         <Link href={`/${category}/${product.slug}`}>
           <div key={product.slug} className="group relative">
             <div className="w-full h-56 bg-gray-200 rounded-md overflow-hidden group-hover:opacity-75 lg:h-64">
-              {typeof product.images[0] === 'string' && (
                 <img
-                  src={product.images[0]}
+                  src={String(product.images[0])}
                   alt={product.productName}
                   className="w-full h-full object-center object-cover"
                 />
-              )}
             </div>
             <h3 className="mt-4 text-sm text-gray-700">
               <span className="absolute inset-0" />

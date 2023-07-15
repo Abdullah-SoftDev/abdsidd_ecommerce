@@ -23,7 +23,7 @@ const page = () => {
     const { name, value } = e.target;
 
     if (name === "productName") {
-      const slug = value.toLowerCase().replace(' ', '-');
+      const slug = value.toLowerCase().replaceAll(' ', '-');
       setProduct((prevProduct) => ({
         ...prevProduct,
         [name]: value,
