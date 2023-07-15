@@ -1,6 +1,10 @@
+import { auth, db } from "@/firebase/firebaseConfig";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { collection, orderBy, query } from "firebase/firestore";
 import React, { Fragment } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 
 const products = [
   {
@@ -67,7 +71,15 @@ const products = [
 ];
 
 const Cart = ({ open, setOpen }: any) => {
-  return (
+  const [user] = useAuthState(auth);
+  const cartQuery = query(
+    collection(db, 'cart'),
+    orderBy('createdAt')
+  );
+  
+  const [cartData, loading] = useCollectionData(cartQuery);
+  // console.log("ans",cartData);
+  return (                             
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-30" onClose={setOpen}>
         <Transition.Child
@@ -119,12 +131,12 @@ const Cart = ({ open, setOpen }: any) => {
                             role="list"
                             className="-my-6 divide-y divide-gray-200"
                           >
-                            {products.map((product) => (
+                            {cartData?.filter((data) => data?.uid === user?.uid)?.map((product) => (
                               <li key={product.id} className="flex py-6">
                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                   <img
-                                    src={product.imageSrc}
-                                    alt={product.imageAlt}
+                                    src={product.images[0]}
+                                    alt={product.productName}
                                     className="h-full w-full object-cover object-center"
                                   />
                                 </div>
@@ -133,19 +145,19 @@ const Cart = ({ open, setOpen }: any) => {
                                   <div>
                                     <div className="flex justify-between text-base font-medium text-gray-900">
                                       <h3>
-                                        <a href={product.href}>
-                                          {product.name}
+                                        <a href={"/"}>
+                                          {product.productName}
                                         </a>
                                       </h3>
                                       <p className="ml-4">{product.price}</p>
                                     </div>
                                     <p className="mt-1 text-sm text-gray-500">
-                                      {product.color}
+                                      {product.category}
                                     </p>
                                   </div>
                                   <div className="flex flex-1 items-end justify-between text-sm">
                                     <p className="text-gray-500">
-                                      Qty {product.quantity}
+                                      Qty 1
                                     </p>
 
                                     <div className="flex">
