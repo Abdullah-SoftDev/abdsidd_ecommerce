@@ -9,15 +9,15 @@ import ServiceForm from "./components/ServiceForm";
 import BuyNowButton from "./components/BuyNowButton";
 
 
-export default async function page({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export default async function page({ params }: { params: { slug: string, category: string } }) {
+  const { slug , category} = params;
   const productRef = doc(db, "products", slug);
   const docSnapshot = await getDoc(productRef);
   const productData = docSnapshot.data() as Product;
-  
+
   return (
     <div className="mx-auto max-w-5xl px-2 py-14 min-h-screen">
-      
+
       <div className="lg:grid lg:grid-cols-2 lg:space-x-8">
         {/* Image gallery */}
         <ImageGallery images={productData?.images} />
@@ -47,31 +47,31 @@ export default async function page({ params }: { params: { slug: string } }) {
               <Features slug={productData?.slug} desc={productData?.desc} />
             </section>
 
-        <ServiceForm/>
+            <ServiceForm />
 
             <div className="mt-10 space-x-5 flex sm:flex-col1">
-            <AddToCartButton
-  productName={productData?.productName}
-  slug={productData?.slug}
-  desc={productData?.desc}
-  price={productData?.price}
-  category={productData?.category}
-  images={productData?.images}
-  quantity={productData?.quantity}
-/>
-          <BuyNowButton   
-  productName={productData?.productName}
-  slug={productData?.slug}
-  desc={productData?.desc}
-  price={productData?.price}
-  category={productData?.category}
-  images={productData?.images}
-  quantity={productData?.quantity}/>
+              <AddToCartButton
+                productName={productData?.productName}
+                slug={productData?.slug}
+                desc={productData?.desc}
+                price={productData?.price}
+                category={productData?.category}
+                images={productData?.images}
+                quantity={productData?.quantity}
+              />
+              <BuyNowButton
+                productName={productData?.productName}
+                slug={productData?.slug}
+                desc={productData?.desc}
+                price={productData?.price}
+                category={productData?.category}
+                images={productData?.images}
+                quantity={productData?.quantity} />
             </div>
           </div>
         </div>
       </div>
-      <RecommendedProductSlider />
+      <RecommendedProductSlider slug={slug} category={category}/>
     </div>
   );
 }
