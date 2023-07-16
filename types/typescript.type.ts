@@ -1,7 +1,6 @@
 import { Timestamp } from "firebase/firestore";
 
 export type Product = {
-  productId: string;
   productName: string;
   slug: string;
   desc: string;
@@ -23,6 +22,8 @@ export type ProductFormState = {
   desc: string;
   price: number;
   category: string;
+  quantity?: number;
+  createdAt?: Timestamp;
   images: (string | File)[];
 };
 

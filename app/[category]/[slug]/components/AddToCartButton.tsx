@@ -5,27 +5,25 @@ import { deleteDoc, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useDocument } from "react-firebase-hooks/firestore";
 
-const AddToCartButton = ({  productId, productName, slug, desc, price, category, images, quantity, }: Product) => {
+const AddToCartButton = ({ productName, slug, desc, price, category, images, quantity, }: Product) => {
     const [user] = useAuthState(auth);
-    const [cartItemDoc] = useDocument(doc(db, `cart/${productId}`));
+    const [cartItemDoc] = useDocument(doc(db, `users/${user?.uid}/cart/${slug}`));
 
     const addToCart = async () => {
         try {
             if (!user) {
                 throw new Error('Login first');
             } else {
-            await setDoc(doc(db, 'cart', `${productId}`), {
-                productId: productId,
-                productName: productName,
-                slug: slug,
-                desc: desc,
-                price: price,
-                category: category,
-                images: images,
-                quantity: quantity,
-                createdAt: serverTimestamp(),
-                uid: user.uid
-            });
+                await setDoc(doc(db, `users/${user?.uid}/cart/${slug}`), {
+                    productName: productName,
+                    slug: slug,
+                    desc: desc,
+                    price: price,
+                    category: category,
+                    images: images,
+                    quantity: quantity,
+                    createdAt: serverTimestamp(),
+                });
             }
         } catch (error) {
             alert(error);
@@ -37,7 +35,7 @@ const AddToCartButton = ({  productId, productName, slug, desc, price, category,
             if (!user) {
                 throw new Error('Login first');
             } else {
-            await deleteDoc(doc(db, `cart/${productId}`));
+                await deleteDoc(doc(db, `users/${user?.uid}/cart/${slug}`));
             }
         } catch (error) {
             alert(error);

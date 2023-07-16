@@ -6,23 +6,22 @@ import { collection, deleteDoc, doc, getDoc, orderBy, query, updateDoc } from "f
 import React, { Fragment } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import { loadStripe } from "@stripe/stripe-js";
-import axios from "axios";
 import { toast } from "react-toastify";
 
 const Cart = ({ open, setOpen }: CartProps) => {
   const [user] = useAuthState(auth);
   const cartQuery = query(
-    collection(db, 'cart'),
+    collection(db, `users/${user?.uid}/cart`),
     orderBy('createdAt')
   );
 
   const [cartData, loading] = useCollectionData(cartQuery);
 
   const handelRemoveFromCart = async (id: string) => {
-    await deleteDoc(doc(db, 'cart', id));
+    await deleteDoc(doc(db, `users/${user?.uid}/cart/${id}`));
   }
-  const userCartdata = cartData?.filter((data) => data?.uid === user?.uid);
+
+  const userCartdata = cartData;
 
   const totalArr: number[] = [];
   (userCartdata as Product[])?.map((e: Product) => {
@@ -33,15 +32,6 @@ const Cart = ({ open, setOpen }: CartProps) => {
   for (let i = 0; i < totalArr.length; i++) {
     sum += totalArr[i];
   }
-
-
-
-
-
-
-
-
-
  
   const createCheckout = async () => {
     const data = await fetch(`/checkout`, {
@@ -64,20 +54,9 @@ const Cart = ({ open, setOpen }: CartProps) => {
     window.location.href = url;
   };
 
-
-
-
-
-
-
-
-
-
-
-
   const handleIncrementQuantity = async (id: string) => {
     try {
-      const cartRef = doc(db, 'cart', id);
+      const cartRef = doc(db, `users/${user?.uid}/cart/${id}`);
       const cartSnapshot = await getDoc(cartRef);
 
       if (cartSnapshot.exists()) {
@@ -93,7 +72,7 @@ const Cart = ({ open, setOpen }: CartProps) => {
 
   const handleDecrementQuantity = async (id: string) => {
     try {
-      const cartRef = doc(db, 'cart', id);
+      const cartRef = doc(db, `users/${user?.uid}/cart/${id}`);
       const cartSnapshot = await getDoc(cartRef);
 
       if (cartSnapshot.exists()) {
@@ -114,8 +93,6 @@ const Cart = ({ open, setOpen }: CartProps) => {
       alert(error);
     }
   };
-
-
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -197,7 +174,7 @@ const Cart = ({ open, setOpen }: CartProps) => {
                                   <div className="flex flex-1 items-end justify-between text-sm">
                                     <div className="flex items-center">
                                       <button
-                                        onClick={() => handleDecrementQuantity(product.productId)}
+                                        onClick={() => handleDecrementQuantity(product.slug)}
                                         type="button"
                                         className="p-1 border border-gray-300 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                       >
@@ -220,7 +197,7 @@ const Cart = ({ open, setOpen }: CartProps) => {
                                       <p className="mx-2 text-black">{product.quantity}</p>
 
                                       <button
-                                        onClick={() => handleIncrementQuantity(product.productId)}
+                                        onClick={() => handleIncrementQuantity(product.slug)}
                                         type="button"
                                         className="p-1 border border-gray-300 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                       >
@@ -243,7 +220,7 @@ const Cart = ({ open, setOpen }: CartProps) => {
 
                                     <div className="flex">
                                       <button
-                                        onClick={() => handelRemoveFromCart(product.productId)}
+                                        onClick={() => handelRemoveFromCart(product.slug)}
                                         type="button"
                                         className="font-medium text-indigo-600 hover:text-indigo-500"
                                       >
@@ -282,7 +259,7 @@ const Cart = ({ open, setOpen }: CartProps) => {
                           <button
                             type="button"
                             className="font-medium text-indigo-600 hover:text-indigo-500"
-                            onClick={() => setOpen(false)}
+                            onClick={() => setOpen(true)}
                           >
                             Continue Shopping
                             <span aria-hidden="true"> &rarr;</span>

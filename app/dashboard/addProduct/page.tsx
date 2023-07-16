@@ -1,6 +1,6 @@
 "use client";
-import { Product, ProductFormState } from "@/types/typescript.type";
-import { collection, doc, serverTimestamp, setDoc, Timestamp } from "firebase/firestore";
+import { ProductFormState } from "@/types/typescript.type";
+import {  doc, serverTimestamp, setDoc, Timestamp } from "firebase/firestore";
 import { db, storage } from "@/firebase/firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { ChangeEvent, useState } from "react";
@@ -58,10 +58,8 @@ const page = () => {
       alert("Please fill all required fields.");
       return;
     }
-    const productId = doc(collection(db, "ids")).id;
 
-    const newProduct: Product = {
-      productId,
+    const newProduct: ProductFormState = {
       productName,
       slug,
       desc,

@@ -15,9 +15,11 @@ import WhatsappButton from "./WhatsappButton";
 const Navbar = () => {
   const [open, setOpen] = useState<boolean>(false); //Handles the cart sidebar
   const [user] = useAuthState(auth);
-  const [cartData, loading] = useCollectionData(collection(db, "cart"));
-  let cartLength =
-    cartData?.filter((data) => data?.uid === user?.uid)?.length || 0;
+  const [cartData, loading] = useCollectionData(
+    collection(db, `users/${user?.uid}/cart`)
+  );
+  
+  const cartLength = cartData?.length || 0;  
 
   return (
     <Disclosure
