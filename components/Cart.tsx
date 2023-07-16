@@ -6,6 +6,9 @@ import { collection, deleteDoc, doc, getDoc, orderBy, query, updateDoc } from "f
 import React, { Fragment } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
+import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Cart = ({ open, setOpen }: CartProps) => {
   const [user] = useAuthState(auth);
@@ -30,6 +33,44 @@ const Cart = ({ open, setOpen }: CartProps) => {
   for (let i = 0; i < totalArr.length; i++) {
     sum += totalArr[i];
   }
+
+
+
+
+
+
+
+
+
+ 
+  const createCheckout = async () => {
+    const data = await fetch(`/checkout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userCartdata,
+        uid:user?.uid
+      }),
+    });
+
+    if (!data.ok) {
+      return toast.error("Failed to create order");
+    }
+
+    const { url } = await data.json();
+
+    window.location.href = url;
+  };
+
+
+
+
+
+
+
+
 
 
 
@@ -228,12 +269,12 @@ const Cart = ({ open, setOpen }: CartProps) => {
                         Shipping and taxes calculated at checkout.
                       </p>
                       <div className="mt-6">
-                        <a
-                          href="#"
+                        <button
+                          onClick={createCheckout}
                           className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                         >
                           Checkout
-                        </a>
+                        </button>
                       </div>
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <p>

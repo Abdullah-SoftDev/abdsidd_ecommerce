@@ -49,14 +49,14 @@ export default async function page({ params }: { params: { slug: string } }) {
 
             <div className="mt-10 space-x-5 flex sm:flex-col1">
             <AddToCartButton
-  productId={productData.productId}
-  productName={productData.productName}
-  slug={productData.slug}
-  desc={productData.desc}
-  price={productData.price}
-  category={productData.category}
-  images={productData.images}
-  quantity={productData.quantity}
+  productId={productData?.productId}
+  productName={productData?.productName}
+  slug={productData?.slug}
+  desc={productData?.desc}
+  price={productData?.price}
+  category={productData?.category}
+  images={productData?.images}
+  quantity={productData?.quantity}
 />
               <button
                 type="button"
@@ -64,7 +64,7 @@ export default async function page({ params }: { params: { slug: string } }) {
               >
                 Buy Now
               </button>
-            S</div>
+            </div>
           </div>
         </div>
       </div>
