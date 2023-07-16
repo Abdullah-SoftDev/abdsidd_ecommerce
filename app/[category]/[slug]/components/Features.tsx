@@ -1,13 +1,15 @@
 "use client";
+import { FeatureProps, Product } from "@/types/typescript.type";
 import { Disclosure } from "@headlessui/react";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
 
-function classNames(...classes: any[]) {
+function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-const Features = ({ productData }: any) => {
-  console.log(productData);
+
+
+const Features = ({ slug, desc }: FeatureProps) => {
   return (
     <div className="border-t divide-y divide-gray-200">
       <Disclosure as="div">
@@ -40,7 +42,7 @@ const Features = ({ productData }: any) => {
             </h3>
             <Disclosure.Panel as="div" className="pb-6 prose prose-sm">
               <ul role="list">
-                <li key={productData?.slug}>{productData?.desc}</li>
+                <li key={slug}>{desc}</li>
               </ul>
             </Disclosure.Panel>
           </>

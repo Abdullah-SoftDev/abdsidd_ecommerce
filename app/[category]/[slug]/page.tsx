@@ -13,13 +13,12 @@ export default async function page({ params }: { params: { slug: string } }) {
   const productRef = doc(db, "products", slug);
   const docSnapshot = await getDoc(productRef);
   const productData = docSnapshot.data() as Product;
-
   return (
     <div className="mx-auto max-w-5xl px-2 py-14 min-h-screen">
       
       <div className="lg:grid lg:grid-cols-2 lg:space-x-8">
         {/* Image gallery */}
-        <ImageGallery productData={productData} />
+        <ImageGallery images={productData?.images} />
         {/* Product info */}
         <div className="py-4 md:py-0 px-2 sm:px-0">
           <div className="mt-3">
@@ -43,13 +42,22 @@ export default async function page({ params }: { params: { slug: string } }) {
                 Additional details
               </h2>
 
-              <Features productData={productData} />
+              <Features slug={productData?.slug} desc={productData?.desc} />
             </section>
 
         <ServiceForm/>
 
             <div className="mt-10 space-x-5 flex sm:flex-col1">
-              <AddToCartButton productData={productData} />
+            <AddToCartButton
+  productId={productData.productId}
+  productName={productData.productName}
+  slug={productData.slug}
+  desc={productData.desc}
+  price={productData.price}
+  category={productData.category}
+  images={productData.images}
+  quantity={productData.quantity}
+/>
               <button
                 type="button"
                 className="max-w-xs flex-1 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 sm:w-full"

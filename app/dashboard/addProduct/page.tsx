@@ -1,5 +1,5 @@
 "use client";
-import { Product } from "@/types/typescript.type";
+import { Product, ProductFormState } from "@/types/typescript.type";
 import { collection, doc, serverTimestamp, setDoc, Timestamp } from "firebase/firestore";
 import { db, storage } from "@/firebase/firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -10,7 +10,7 @@ const page = () => {
   const [isPublishing, setIsPublishing] = useState<boolean>(false);
   const [uploaded, setIsUploaded] = useState<boolean>(false);
 
-  const [product, setProduct] = useState({
+  const [product, setProduct] = useState<ProductFormState>({
     productName: "",
     slug: "",
     desc: "",
@@ -41,7 +41,7 @@ const page = () => {
     const fileList = event.target.files;
     if (fileList) {
       const fileArray = Array.from(fileList);
-      setProduct((prevProduct:any) => ({
+      setProduct((prevProduct) => ({
         ...prevProduct,
         images: fileArray,
       }));
@@ -106,7 +106,7 @@ const page = () => {
         downloadURLs.push(downloadURL);
       }
   
-      setProduct((prevProduct:any) => ({
+      setProduct((prevProduct) => ({
         ...prevProduct,
         images: downloadURLs,
       }));

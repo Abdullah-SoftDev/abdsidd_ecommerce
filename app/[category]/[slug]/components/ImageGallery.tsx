@@ -1,14 +1,15 @@
 "use client";
+import { ImageGallery } from "@/types/typescript.type";
 import { Tab } from "@headlessui/react";
 import { useState } from "react";
 
-const ImageGallery = ({ productData }: any) => {
-  const [selectedImage, setSelectedImage] = useState(productData?.images[0]);
+const ImageGallery = ({ images }: ImageGallery) => {
+  const [selectedImage, setSelectedImage] = useState(images[0]);
   return (
     <Tab.Group as="div" className="flex flex-col-reverse">
       <div className="mt-6 w-full max-w-2xl mx-auto sm:block lg:max-w-none">
         <Tab.List className="grid grid-cols-4 gap-6">
-          {productData?.images.map((image) => (
+          {images.map((image:string) => (
             <Tab
               key={String(image)}
               className={`relative h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-opacity-50 ${

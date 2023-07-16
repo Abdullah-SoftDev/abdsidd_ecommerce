@@ -1,4 +1,5 @@
 import { auth, db } from "@/firebase/firebaseConfig";
+import { CartProps, Product } from "@/types/typescript.type";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { collection, deleteDoc, doc, getDoc, orderBy, query, updateDoc } from "firebase/firestore";
@@ -6,7 +7,7 @@ import React, { Fragment } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
-const Cart = ({ open, setOpen }: any) => {
+const Cart = ({ open, setOpen }: CartProps) => {
   const [user] = useAuthState(auth);
   const cartQuery = query(
     collection(db, 'cart'),
@@ -20,28 +21,30 @@ const Cart = ({ open, setOpen }: any) => {
   }
   const userCartdata = cartData?.filter((data) => data?.uid === user?.uid);
 
-  const totalarr: number[] = [];
-  userCartdata?.map((e: any) => {
-    totalarr.push(e?.price * e?.quantity); // Calculate the total price for each item
+  const totalArr: number[] = [];
+  (userCartdata as Product[])?.map((e: Product) => {
+    totalArr.push(e.price * e.quantity); // Calculate the total price for each item
   });
+
   let sum = 0;
-  for (let i = 0; i < totalarr.length; i++) {
-    sum += totalarr[i];
+  for (let i = 0; i < totalArr.length; i++) {
+    sum += totalArr[i];
   }
-  
 
 
-  const handleIncrementQuantity = async (id:string) => {
+
+
+  const handleIncrementQuantity = async (id: string) => {
     try {
-        const cartRef = doc(db, 'cart', id);
-        const cartSnapshot = await getDoc(cartRef);
-  
-        if (cartSnapshot.exists()) {
-          // Increase the quantity if the product already exists in the cart
-          await updateDoc(cartRef, {
-            quantity: cartSnapshot.data().quantity + 1
-          });
-        } 
+      const cartRef = doc(db, 'cart', id);
+      const cartSnapshot = await getDoc(cartRef);
+
+      if (cartSnapshot.exists()) {
+        // Increase the quantity if the product already exists in the cart
+        await updateDoc(cartRef, {
+          quantity: cartSnapshot.data().quantity + 1
+        });
+      }
     } catch (error) {
       alert(error);
     }
@@ -51,11 +54,11 @@ const Cart = ({ open, setOpen }: any) => {
     try {
       const cartRef = doc(db, 'cart', id);
       const cartSnapshot = await getDoc(cartRef);
-  
+
       if (cartSnapshot.exists()) {
         const currentQuantity = cartSnapshot.data().quantity;
         const updatedQuantity = currentQuantity - 1;
-  
+
         if (updatedQuantity <= 0) {
           // Remove the product from the cart if quantity becomes 0 or less
           await deleteDoc(cartRef);
@@ -70,9 +73,9 @@ const Cart = ({ open, setOpen }: any) => {
       alert(error);
     }
   };
-  
 
-  
+
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-30" onClose={setOpen}>
@@ -131,85 +134,85 @@ const Cart = ({ open, setOpen }: any) => {
                             className="-my-6 divide-y divide-gray-200"
                           >
                             {userCartdata?.map((product) => (
-                         <li key={product.id} className="flex py-6">
-                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                           <img
-                             src={product.images[0]}
-                             alt={product.productName}
-                             className="h-full w-full object-cover object-center"
-                           />
-                         </div>
-                       
-                         <div className="ml-4 flex flex-1 flex-col">
-                           <div>
-                             <div className="flex justify-between text-base font-medium text-gray-900">
-                               <h3>
-                                 <a href={"/"}>{product.productName}</a>
-                               </h3>
-                               <p className="ml-4">{product.price}</p>
-                             </div>
-                             <p className="mt-1 text-sm text-gray-500">{product.category}</p>
-                           </div>
-                           <div className="flex flex-1 items-end justify-between text-sm">
-                             <div className="flex items-center">
-                               <button
-                                 onClick={() => handleDecrementQuantity(product.productId)}
-                                 type="button"
-                                 className="p-1 border border-gray-300 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                               >
-                                 <svg
-                                   xmlns="http://www.w3.org/2000/svg"
-                                   fill="none"
-                                   viewBox="0 0 24 24"
-                                   stroke="currentColor"
-                                   className="h-4 w-4"
-                                 >
-                                   <path
-                                     strokeLinecap="round"
-                                     strokeLinejoin="round"
-                                     strokeWidth={2}
-                                     d="M20 12H4"
-                                   />
-                                 </svg>
-                               </button>
-                       
-                               <p className="mx-2 text-black">{product.quantity}</p>
-                       
-                               <button
-                                 onClick={() => handleIncrementQuantity(product.productId)}
-                                 type="button"
-                                 className="p-1 border border-gray-300 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                               >
-                                 <svg
-                                   xmlns="http://www.w3.org/2000/svg"
-                                   fill="none"
-                                   viewBox="0 0 24 24"
-                                   stroke="currentColor"
-                                   className="h-4 w-4"
-                                 >
-                                   <path
-                                     strokeLinecap="round"
-                                     strokeLinejoin="round"
-                                     strokeWidth={2}
-                                     d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                                   />
-                                 </svg>
-                               </button>
-                             </div>
-                       
-                             <div className="flex">
-                               <button
-                                 onClick={() => handelRemoveFromCart(product.productId)}
-                                 type="button"
-                                 className="font-medium text-indigo-600 hover:text-indigo-500"
-                               >
-                                 Remove
-                               </button>
-                             </div>
-                           </div>
-                         </div>
-                       </li>
-                       
+                              <li key={product.id} className="flex py-6">
+                                <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                                  <img
+                                    src={product.images[0]}
+                                    alt={product.productName}
+                                    className="h-full w-full object-cover object-center"
+                                  />
+                                </div>
+
+                                <div className="ml-4 flex flex-1 flex-col">
+                                  <div>
+                                    <div className="flex justify-between text-base font-medium text-gray-900">
+                                      <h3>
+                                        <a href={"/"}>{product.productName}</a>
+                                      </h3>
+                                      <p className="ml-4">{product.price}</p>
+                                    </div>
+                                    <p className="mt-1 text-sm text-gray-500">{product.category}</p>
+                                  </div>
+                                  <div className="flex flex-1 items-end justify-between text-sm">
+                                    <div className="flex items-center">
+                                      <button
+                                        onClick={() => handleDecrementQuantity(product.productId)}
+                                        type="button"
+                                        className="p-1 border border-gray-300 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          fill="none"
+                                          viewBox="0 0 24 24"
+                                          stroke="currentColor"
+                                          className="h-4 w-4"
+                                        >
+                                          <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M20 12H4"
+                                          />
+                                        </svg>
+                                      </button>
+
+                                      <p className="mx-2 text-black">{product.quantity}</p>
+
+                                      <button
+                                        onClick={() => handleIncrementQuantity(product.productId)}
+                                        type="button"
+                                        className="p-1 border border-gray-300 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          fill="none"
+                                          viewBox="0 0 24 24"
+                                          stroke="currentColor"
+                                          className="h-4 w-4"
+                                        >
+                                          <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                                          />
+                                        </svg>
+                                      </button>
+                                    </div>
+
+                                    <div className="flex">
+                                      <button
+                                        onClick={() => handelRemoveFromCart(product.productId)}
+                                        type="button"
+                                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                                      >
+                                        Remove
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </li>
+
                             ))}
                           </ul>
                         </div>
