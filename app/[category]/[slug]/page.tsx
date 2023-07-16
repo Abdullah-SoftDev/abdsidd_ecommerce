@@ -6,6 +6,7 @@ import ImageGallery from "./components/ImageGallery";
 import Features from "./components/Features";
 import AddToCartButton from "./components/AddToCartButton";
 import ServiceForm from "./components/ServiceForm";
+import BuyNowButton from "./components/BuyNowButton";
 
 
 export default async function page({ params }: { params: { slug: string } }) {
@@ -13,6 +14,7 @@ export default async function page({ params }: { params: { slug: string } }) {
   const productRef = doc(db, "products", slug);
   const docSnapshot = await getDoc(productRef);
   const productData = docSnapshot.data() as Product;
+  
   return (
     <div className="mx-auto max-w-5xl px-2 py-14 min-h-screen">
       
@@ -58,12 +60,15 @@ export default async function page({ params }: { params: { slug: string } }) {
   images={productData?.images}
   quantity={productData?.quantity}
 />
-              <button
-                type="button"
-                className="max-w-xs flex-1 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 sm:w-full"
-              >
-                Buy Now
-              </button>
+          <BuyNowButton   
+          productId={productData?.productId}
+  productName={productData?.productName}
+  slug={productData?.slug}
+  desc={productData?.desc}
+  price={productData?.price}
+  category={productData?.category}
+  images={productData?.images}
+  quantity={productData?.quantity}/>
             </div>
           </div>
         </div>
