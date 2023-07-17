@@ -1,16 +1,28 @@
+import { db } from "@/firebase/firebaseConfig";
 import { stripe } from "@/lib/stripe";
+import { Product } from "@/types/typescript.type";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { NextResponse } from "next/server";
 
+
+const createOrder = async (userCartdata:Product[], uid:string) => {
+    await addDoc(collection(db, "orders"), {
+        uid: uid,
+        userCartdata,
+        createdAt: serverTimestamp(),
+    });
+};
+
 export const POST = async (request: Request) => {
-    const body: { userCartdata: any[], uid: any } = await request.json();
+    const body: { userCartdata: Product[], uid: string } = await request.json();
 
     const { userCartdata, uid } = body;
 
-    console.log(userCartdata);
-
     try {
+        await createOrder(userCartdata, uid);
+
         const checkoutSession = await stripe.checkout.sessions.create({
-            line_items: userCartdata.map((item: any) => ({
+            line_items: userCartdata.map((item) => ({
                 price_data: {
                     currency: "inr",
                     product_data: {

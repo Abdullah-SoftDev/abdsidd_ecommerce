@@ -1,6 +1,20 @@
+import { db } from "@/firebase/firebaseConfig";
 import { stripe } from "@/lib/stripe";
 import { Product } from "@/types/typescript.type";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { NextResponse } from "next/server";
+
+const createOrder = async (productName: string, desc: string, price: Number, images: string[], quantity: Number, uid: string) => {
+    await addDoc(collection(db, "orders"), {
+        uid: uid,
+        productName: productName,
+        desc: desc,
+        price: price,
+        images: images,
+        quantity: quantity,
+        createdAt: serverTimestamp(),
+    });
+};
 
 export const POST = async (request: Request) => {
     const body: Product & { uid: string } = await request.json();
@@ -8,6 +22,8 @@ export const POST = async (request: Request) => {
     const { productName, desc, price, images, quantity, uid } = body;
 
     try {
+        await createOrder(productName, desc, price, images, quantity, uid);
+
         const checkoutSession = await stripe.checkout.sessions.create({
             line_items: [
                 {
