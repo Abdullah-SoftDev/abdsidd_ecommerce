@@ -5,8 +5,12 @@ import React from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { toast } from 'react-toastify';
 
-const BuyNowButton = ({ productName, slug, desc, price, category, images, quantity, }: Product) => {
-    const [user] = useAuthState(auth);
+interface BuyNowButtonProps {
+    productData: Product;
+  }
+  
+  const BuyNowButton = ({ productData }: BuyNowButtonProps) => {
+        const [user] = useAuthState(auth);
 
     const createCheckout = async () => {
         if (!user) {
@@ -19,8 +23,8 @@ const BuyNowButton = ({ productName, slug, desc, price, category, images, quanti
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                productName, slug, desc, price, category, images, quantity,
-                uid: user?.uid
+                productData: [productData], 
+                uid:user?.uid
             }),
         });
 

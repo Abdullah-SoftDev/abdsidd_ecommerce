@@ -60,13 +60,8 @@ export default async function page({ params }: { params: { slug: string, categor
                 quantity={productData?.quantity}
               />
               <BuyNowButton
-                productName={productData?.productName}
-                slug={productData?.slug}
-                desc={productData?.desc}
-                price={productData?.price}
-                category={productData?.category}
-                images={productData?.images}
-                quantity={productData?.quantity} />
+                productData={productData}
+               />
             </div>
           </div>
         </div>
