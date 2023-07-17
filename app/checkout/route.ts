@@ -1,18 +1,10 @@
-import { db } from "@/firebase/firebaseConfig";
+// import { db } from "@/firebase/firebaseConfig";
 import { stripe } from "@/lib/stripe";
 import { Product } from "@/types/typescript.type";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+// import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { NextResponse } from "next/server";
 
-const createOrder = async (userCartdata: Product[], uid: string) => {
-  await addDoc(collection(db, "orders"), {
-    uid: uid,
-    userCartdata: userCartdata, // Corrected field name
-    createdAt: serverTimestamp(),
-  });
-};
-
-export const POST = async (request: Request) => {
+export async function POST(request: Request) {
   const body: { userCartdata: Product[]; uid: string } = await request.json();
 
   const { userCartdata, uid } = body;
@@ -33,12 +25,12 @@ export const POST = async (request: Request) => {
       })),
       metadata: {
         userId: uid,
+        images: JSON.stringify(userCartdata.map((item) => item.images)),
       },
       mode: "payment",
       success_url: `http://localhost:3000/success`,
       cancel_url: `http://localhost:3000/cancel`,
     });
-    await createOrder(userCartdata, uid);
 
     return NextResponse.json({ url: checkoutSession.url });
   } catch (err) {
@@ -52,3 +44,13 @@ export const POST = async (request: Request) => {
     );
   }
 };
+
+// const createOrder = async (data) => {
+//   await addDoc(collection(db, "orders"), {
+//     uid: data.metadata.userId,
+//     paymentId: data.id,
+//     amount: data.amount_total / 100,
+//     images: data.metadata.images[0],
+//     createdAt: serverTimestamp(),
+//   });
+// };
