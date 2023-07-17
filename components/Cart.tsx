@@ -2,7 +2,9 @@ import { auth, db } from "@/firebase/firebaseConfig";
 import { CartProps, Product } from "@/types/typescript.type";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import loadingAnimation from "../public/emptyCart.json";
 import { collection, deleteDoc, doc, getDoc, orderBy, query, updateDoc } from "firebase/firestore";
+import Lottie from "lottie-react";
 import React, { Fragment } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
@@ -32,7 +34,7 @@ const Cart = ({ open, setOpen }: CartProps) => {
   for (let i = 0; i < totalArr.length; i++) {
     sum += totalArr[i];
   }
- 
+
   const createCheckout = async () => {
     const data = await fetch(`/checkout`, {
       method: "POST",
@@ -41,7 +43,7 @@ const Cart = ({ open, setOpen }: CartProps) => {
       },
       body: JSON.stringify({
         userCartdata,
-        uid:user?.uid
+        uid: user?.uid
       }),
     });
 
@@ -141,9 +143,15 @@ const Cart = ({ open, setOpen }: CartProps) => {
                       </div>
 
                       {(userCartdata?.length === 0) && (
-                        <p className="text-red-500 italic text-lg py-5">Your cart is empty. Start Shopping🛒</p>
+                        <div className="flex items-center justify-center h-screen">
+                          <Lottie
+                            className=""
+                            style={{ height: 300 }}
+                            animationData={loadingAnimation}
+                            loop={true}
+                          />
+                        </div>
                       )}
-
 
                       <div className="mt-8">
                         <div className="flow-root">
