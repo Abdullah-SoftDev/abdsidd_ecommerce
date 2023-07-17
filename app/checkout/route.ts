@@ -1,8 +1,18 @@
-// import { db } from "@/firebase/firebaseConfig";
+import { auth, db } from "@/firebase/firebaseConfig";
 import { stripe } from "@/lib/stripe";
 import { Product } from "@/types/typescript.type";
-// import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, serverTimestamp } from "firebase/firestore";
 import { NextResponse } from "next/server";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useCollection } from "react-firebase-hooks/firestore";
+
+const createOrder = async (productData: Product[], uid: string) => {
+  await addDoc(collection(db, "orders"), {
+    uid,
+    userCartdata: productData,
+    createdAt: serverTimestamp(),
+  });
+};
 
 export async function POST(request: Request) {
   const body: { userCartdata: Product[]; uid: string } = await request.json();
@@ -10,6 +20,8 @@ export async function POST(request: Request) {
   const { userCartdata, uid } = body;
 
   try {
+    await createOrder(userCartdata, uid);
+
     const checkoutSession = await stripe.checkout.sessions.create({
       line_items: userCartdata.map((item) => ({
         price_data: {
@@ -44,13 +56,3 @@ export async function POST(request: Request) {
     );
   }
 };
-
-// const createOrder = async (data) => {
-//   await addDoc(collection(db, "orders"), {
-//     uid: data.metadata.userId,
-//     paymentId: data.id,
-//     amount: data.amount_total / 100,
-//     images: data.metadata.images[0],
-//     createdAt: serverTimestamp(),
-//   });
-// };

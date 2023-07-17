@@ -1,3 +1,7 @@
+// Currenlty this will not work because nextjs has an issue that i have posted on their github and till then wait for their response🤷🥱
+
+// Here is the issue link. https://github.com/vercel/next.js/issues/48875
+
 import { db } from "@/firebase/firebaseConfig";
 import { stripe } from "@/lib/stripe";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";

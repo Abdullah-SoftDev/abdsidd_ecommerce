@@ -1,13 +1,13 @@
 import { db } from "@/firebase/firebaseConfig";
 import { Product } from "@/types/typescript.type";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, serverTimestamp } from "firebase/firestore";
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 
 const createOrder = async (productData: Product[], uid: string) => {
   await addDoc(collection(db, "orders"), {
     uid,
-    userCartdata:productData,
+    userCartdata: productData,
     createdAt: serverTimestamp(),
   });
 };
