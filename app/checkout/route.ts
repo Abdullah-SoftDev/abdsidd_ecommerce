@@ -40,8 +40,8 @@ export async function POST(request: Request) {
         images: JSON.stringify(userCartdata.map((item) => item.images)),
       },
       mode: "payment",
-      success_url: `http://localhost:3000/success`,
-      cancel_url: `http://localhost:3000/cancel`,
+      success_url: `https://abdsidd-ecommerce.vercel.app/success`,
+      cancel_url: `https://abdsidd-ecommerce.vercel.app/cancel`,
     });
 
     return NextResponse.json({ url: checkoutSession.url });

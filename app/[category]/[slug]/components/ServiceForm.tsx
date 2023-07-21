@@ -11,7 +11,7 @@ const ServiceForm = () => {
     if (!pincode) return;
 
     try {
-      const response = await fetch('http://localhost:3000/pincodes');
+      const response = await fetch('https://abdsidd-ecommerce.vercel.app/pincodes');
       const pinjson = await response.json();
       if (pinjson.includes(pincode)) {
         toast?.success("Sevice availbale.");
