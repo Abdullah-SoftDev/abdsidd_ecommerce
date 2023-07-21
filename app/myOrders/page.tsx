@@ -6,6 +6,7 @@ import Lottie from "lottie-react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollection } from "react-firebase-hooks/firestore";
 import loadingAnimation from "../../public/loadingAnimation.json";
+import loadingAnimation2 from "../../public/noOrders.json";
 import Link from "next/link";
 
 export default function Page() {
@@ -32,7 +33,7 @@ export default function Page() {
   return (
     <div className="mx-auto max-w-5xl px-2 py-14 min-h-screen">
       <div className="max-w-xl">
-        <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">Order history</h1>
+        <h1 className="text-2xl font-semibold tracking-tight text-gray-900 sm:text-3xl">Order history</h1>
         <p className="mt-2 text-sm text-gray-500">
           Check the status of recent orders, manage returns, and download invoices.
         </p>
@@ -40,7 +41,8 @@ export default function Page() {
 
       <div className="mt-16">
         <h2 className="sr-only">Recent orders</h2>
-        {orders ? <div className="space-y-20">
+        {orders ? 
+        <div className="space-y-20">
           {orders?.map((order) => (
             <div key={order.createdAt}>
               <h3 className="sr-only">
@@ -120,7 +122,7 @@ export default function Page() {
               </table>
             </div>
           ))}
-        </div> : <Lottie style={{ height: 300 }} animationData={loadingAnimation} loop={true} />
+        </div> : <Lottie style={{ height: 300 }} animationData={loadingAnimation2} loop={true} />
         }
       </div>
     </div>

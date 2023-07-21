@@ -3,23 +3,23 @@ const footerSections = [
     title: "SHOP",
     links: [
       { label: "T-SHIRTS", href: "/tshirts" },
-      { label: "AIRPOD", href: "/sweatshirts" },
-      { label: "HOODIES", href: "/hoodies" }
+      { label: "AIRPOD", href: "/airpod" },
+      { label: "HOODIES", href: "/iwatch" }
     ]
   },
   {
     title: "CUSTOMER SERVICE",
     links: [
-      { label: "Contact Us", href: "/contact" },
+      { label: "Contact Us", href: "/" },
       { label: "About Us", href: "/about" },
-      { label: "Return Policy", href: "/returnpolicy" }
+      { label: "Return Policy", href: "/" }
     ]
   },
   {
     title: "POLICY",
     links: [
-      { label: "Privacy Policy", href: "/privacy" },
-      { label: "Terms and Conditions", href: "/terms" }
+      { label: "Privacy Policy", href: "/" },
+      { label: "Terms and Conditions", href: "/" }
     ]
   }
 ];
@@ -29,9 +29,9 @@ export default function Footer() {
     <footer className="mx-auto px-2 bg-zinc-100">
       <div className="flex lg:items-center lg:flex-row lg:flex-nowrap flex-wrap flex-col mx-auto max-w-5xl">
         <div className="lg:w-1/4 flex items-center justify-center w-full px-2">
-          <nav className="list-none w-60">
+          <nav className="list-none w-60 pt-3">
             <img
-              src="https://codeswear.com/_next/image?url=%2Flogo.png&w=640&q=75"
+              src="https://www.logolynx.com/images/logolynx/56/56afea50b83164e3e272d4ebeccd94fb.png"
               alt=""
             />
           </nav>

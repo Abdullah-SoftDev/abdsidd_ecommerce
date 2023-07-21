@@ -2,30 +2,23 @@ import Link from "next/link";
 
 const collections = [
   {
-    imageSrc:
-    "https://cdn.dotpe.in/longtail/item_thumbnails/1293287/dOyXoEjc.webp",
-  altText:
-    "Tall slender porcelain bottle with natural clay textured body and cork stopper.",
-  heading: "Airpods",
-    href: "/airpod", // Add the desired href value
+    imageSrc: "https://cdn.dotpe.in/longtail/item_thumbnails/1293287/dOyXoEjc.webp",
+    altText: "airpods",
+    heading: "Airpod",
+    href: "/airpod",
   },
   {
-    imageSrc:
-      "https://codeswear.com/_next/image?url=https%3A%2F%2Fcodeswear.nyc3.cdn.digitaloceanspaces.com%2Fconstants%2Flanding%2Fcollections%2Fmugs.webp&w=1920&q=75",
-    altText:
-      "Tall slender porcelain bottle with natural clay textured body and cork stopper.",
-    heading: "Mug",
-    href: "#mug", // Add the desired href value
+    imageSrc: "https://codeswear.com/_next/image?url=https%3A%2F%2Fcodeswear.nyc3.cdn.digitaloceanspaces.com%2Fconstants%2Flanding%2Fcollections%2Foversizedtshirt.webp&w=1920&q=75",
+    altText: "tshirts",
+    heading: "Tshirts",
+    href: "/tshirts",
   },
   {
-    imageSrc:
-      "https://codeswear.com/_next/image?url=https%3A%2F%2Fcodeswear.nyc3.cdn.digitaloceanspaces.com%2Fconstants%2Flanding%2Fcollections%2Fmugs.webp&w=1920&q=75",
-    altText:
-      "Tall slender porcelain bottle with natural clay textured body and cork stopper.",
-    heading: "Mug",
-    href: "#mug", // Add the desired href value
+    imageSrc: "https://cdn.dotpe.in/longtail/item_thumbnails/1293287/1An0xNDS.webp",
+    altText: "iwatch",
+    heading: "Iwatch",
+    href: "/iwatch", 
   },
-  // Add more collection items with href values
 ];
 
 const CategoryProducts = () => {
