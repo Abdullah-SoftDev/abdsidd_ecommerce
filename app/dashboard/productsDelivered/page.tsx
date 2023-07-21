@@ -56,7 +56,7 @@ const people = [
     // More people...
 ];
   
-const page = () => {
+const Page = () => {
   return (
     <div className="px-4 py-14 sm:px-6 lg:px-8">
     <div className="sm:flex sm:items-center">
@@ -157,4 +157,4 @@ const page = () => {
   </div>  )
 }
 
-export default page
+export default Page

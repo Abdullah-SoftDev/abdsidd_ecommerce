@@ -3,7 +3,7 @@ const people = [
     // More people...
   ]
   
-  export default function page() {
+  export default function Page() {
     return (
       <div className="px-4 py-14 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">

@@ -1,6 +1,6 @@
 import RecentOrders from "./components/RecentOrders"
 
-const page = () => {
+const Page = () => {
   return (
     <>
       <RecentOrders />
@@ -8,4 +8,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

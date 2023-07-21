@@ -5,7 +5,7 @@ import { db, storage } from "@/firebase/firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { ChangeEvent, useState } from "react";
 
-const page = () => {
+const Page = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isPublishing, setIsPublishing] = useState<boolean>(false);
   const [uploaded, setIsUploaded] = useState<boolean>(false);
@@ -334,6 +334,6 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
 
 
