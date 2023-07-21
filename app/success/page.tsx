@@ -7,7 +7,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollection } from "react-firebase-hooks/firestore";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-export default function page() {
+export default function Page() {
   const [user] = useAuthState(auth);
   const router = useRouter()
   const cartsRef = collection(db, `users/${user?.uid}/cart`);

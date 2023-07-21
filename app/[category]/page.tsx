@@ -3,7 +3,7 @@ import { Product } from "@/types/typescript.type";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import Link from "next/link";
 
-const page = async ({ params }: {  params: { category: string }}) => {
+const Page = async ({ params }: {  params: { category: string }}) => {
   const { category } = params; // Extracting uid from params object
   const productsRef = collection(db, 'products');
   const querySnapshot = await getDocs(query(productsRef, where('category', '==', category)));
@@ -45,4 +45,4 @@ const page = async ({ params }: {  params: { category: string }}) => {
   )
 }
 
-export default page
+export default Page

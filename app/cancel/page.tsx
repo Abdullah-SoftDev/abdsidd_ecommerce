@@ -5,7 +5,7 @@ import { auth } from "@/firebase/firebaseConfig";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-export default function page() {
+export default function Page() {
     const [user] = useAuthState(auth);
     const router = useRouter()
     useEffect(() => {

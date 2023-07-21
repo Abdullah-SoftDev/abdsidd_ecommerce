@@ -9,7 +9,7 @@ import ServiceForm from "./components/ServiceForm";
 import BuyNowButton from "./components/BuyNowButton";
 
 
-export default async function page({ params }: { params: { slug: string, category: string } }) {
+export default async function Page({ params }: { params: { slug: string, category: string } }) {
   const { slug , category} = params;
   const productRef = doc(db, "products", slug);
   const docSnapshot = await getDoc(productRef);

@@ -2,7 +2,7 @@
 import React from "react";
 import { TypeAnimation } from "react-type-animation";
 
-const page = () => {
+const Page = () => {
   return (
     <section className="mx-auto max-w-5xl px-2 py-14 min-h-screen">
       <div className="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
@@ -61,4 +61,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

@@ -8,7 +8,7 @@ import { useCollection } from "react-firebase-hooks/firestore";
 import loadingAnimation from "../../public/loadingAnimation.json";
 import Link from "next/link";
 
-export default function page() {
+export default function Page() {
   const [user] = useAuthState(auth);
   const ordersRef = collection(db, "orders");
   const queryy = user ? query(ordersRef, where("uid", "==", user.uid)) : null;
