@@ -42,9 +42,9 @@ const Page = () => {
             you incredible products at unbeatable prices. Built using the power
             of Next.js and Firebase, our website offers a seamless shopping
             experience with the added benefits of server-side rendering. Whether
-            you're a tech enthusiast or someone in search of a stylish geek
-            T-shirt, AbdSidd has something for everyone. And if you're
-            interested in the development process, don't miss the github repo on
+            you are a tech enthusiast or someone in search of a stylish geek
+            T-shirt, AbdSidd has something for everyone. And if you are
+            interested in the development process, dont miss the github repo on
             github. Explore the future of online shopping by visiting AbdSidd
             today.
           </p>
