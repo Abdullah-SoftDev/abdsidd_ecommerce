@@ -22,7 +22,7 @@ const Page = async ({ params }: {  params: { category: string }}) => {
 
       <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
         {fetchedProducts.map((product) => (
-        <Link href={`/${category}/${product.slug}`}>
+        <Link key={product.slug} href={`/${category}/${product.slug}`}>
           <div key={product.slug} className="group relative">
             <div className="w-full h-56 bg-gray-200 rounded-md overflow-hidden group-hover:opacity-75 lg:h-64">
                 <img
