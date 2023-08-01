@@ -3,7 +3,12 @@ import CategoryProducts from "@/components/CategoryProducts";
 import Services from "@/components/Services";
 import Slider from "@/components/Slider";
 
-export default function Home() {
+type Props = {
+  searchParams: { title: string };
+}
+
+export default function Home({ searchParams }: Props) {
+  console.log(searchParams.title)
   return (
     <>
       <Slider />
